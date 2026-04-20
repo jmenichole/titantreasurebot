@@ -1,0 +1,42 @@
+TitanTreasure VIP Workflow Proposal
+
+What is already covered
+The original setup already covered hosting, the Discord server build, verification, and the base bot setup. That core infrastructure is already in place.
+
+What is the current issue
+VIP transfer handling is still manual. That creates extra back-and-forth, slows down the handoff, and makes the owner process harder to keep organized while transfer testing is still being refined.
+
+Recommended next step
+The simplest next move is to improve the Discord-side VIP intake first. This keeps the process cleaner for users and staff without forcing deeper automation too early.
+
+What the refined Discord workflow would do
+1. Collect VIP transfer request details in Discord.
+2. Open a private follow-up case for proof and screenshots.
+3. Keep staff handling organized inside the server.
+4. Make the process easier to manage while the transfer bonus flow is still being tested.
+
+Optional Telegram extension
+If wanted later, the workflow can be extended so completed VIP intake cases are relayed into Telegram for owner review and status handling there. Telegram announcement posting can also be treated as a separate optional extension.
+
+Pricing
+Current setup and hosting: $150 paid
+Refined Discord VIP workflow: $750 one-time
+Telegram integration: optional and should be approved separately before buildout
+
+Approval needed
+Please confirm whether you want:
+1. The refined Discord-only VIP workflow
+2. The Discord workflow plus a Telegram integration quote
+
+Short message version
+Here is the simple version:
+
+The original setup covered hosting, the Discord server build, verification, and the base bot setup. What is still missing is a cleaner VIP transfer workflow.
+
+Right now that process is still manual, which creates extra back-and-forth and makes the owner handoff harder to manage. The recommended next step is to refine the Discord-side VIP intake first so requests are cleaner, proof can be collected in a private case, and staff handling stays more organized.
+
+That refined Discord workflow is $750 one-time. If you want Telegram involved for owner review, status updates, or announcement posting, that should be treated as a separate optional add-on and approved before buildout.
+
+If you want to move forward, the decision is:
+1. Approve the refined Discord workflow
+2. Approve the refined Discord workflow and request a Telegram add-on quote
