@@ -1,4 +1,4 @@
-const { brandPalette, embedThemes } = require('./brand-kit');
+const { brandAssets, brandPalette, embedThemes } = require('./brand-kit');
 
 const readOnlyDeny = [
   'SendMessages',
@@ -162,10 +162,12 @@ const serverTemplate = {
             {
               key: 'welcome',
               pin: true,
+              assets: [brandAssets.logos.horizontalLight],
                 embed: {
                   title: 'Welcome to TitanTreasure',
                   description: 'Serious players only. Verify, pick your lane, and move fast.',
                   color: embedThemes.welcome,
+                  image: brandAssets.logos.horizontalLight.url,
                   fields: [
                   {
                     name: 'Start here',
@@ -250,10 +252,12 @@ const serverTemplate = {
             {
               key: 'announcements-intro',
               pin: true,
+              assets: [brandAssets.logos.horizontalDark],
                 embed: {
                   title: 'Official Updates',
                   description: 'Launches, major pushes, and high-signal updates only.',
                   color: embedThemes.announcement,
+                  image: brandAssets.logos.horizontalDark.url,
                   fields: [
                   {
                     name: 'What belongs here',
@@ -404,10 +408,12 @@ const serverTemplate = {
             {
               key: 'referral-hq',
               pin: true,
+              assets: [brandAssets.banners.referralCampaignAlt],
                 embed: {
                   title: 'Referral HQ',
                   description: 'Referral discussion, momentum, and recognition.',
                   color: embedThemes.announcement,
+                  image: brandAssets.banners.referralCampaignAlt.url,
                   fields: [
                   {
                     name: 'What the site shows',
@@ -597,10 +603,12 @@ const serverTemplate = {
             {
               key: 'support',
               pin: true,
+              assets: [brandAssets.banners.genericPromoMobile],
                 embed: {
                   title: 'Support Desk',
                   description: 'Fast human help when something is blocking progress.',
                   color: embedThemes.support,
+                  image: brandAssets.banners.genericPromoMobile.url,
                   fields: [
                   {
                     name: 'Use cases',
@@ -699,10 +707,12 @@ const verificationTemplate = {
   panel: {
     key: 'verification-panel',
     buttonLabel: 'Start Verification',
+    assets: [brandAssets.logos.horizontal],
                 embed: {
                   title: 'Start Verification',
         description: 'Submit your TitanTreasure User ID. Once approved, the full server unlocks.',
         color: embedThemes.verification,
+        image: brandAssets.logos.horizontal.url,
         fields: [
         {
           name: 'Need an account first?',
@@ -728,10 +738,12 @@ const supportTemplate = {
     key: 'support-panel',
     buttonLabel: 'Create Support Ticket',
     menuPlaceholder: 'Choose what you need help with',
+    assets: [brandAssets.banners.genericPromoMobile],
     embed: {
       title: 'Open a Private Support Ticket',
       description: 'Use the button to open a private support thread and route your request faster.',
       color: embedThemes.support,
+      image: brandAssets.banners.genericPromoMobile.url,
       fields: [
         {
           name: 'How it works',

@@ -16,6 +16,7 @@ const {
 } = require('discord.js');
 const {
   applyEmbedData,
+  buildAttachmentFiles,
   pickRoleByName,
   pickTextChannelByName,
   syncGuild,
@@ -138,6 +139,7 @@ function buildSubmissionEmbed(member, answers) {
     .setTitle('Verification Review')
     .setDescription(`Review the submission from ${member}.`)
     .setColor('#F1C40F')
+    .setThumbnail('attachment://tt-logo-square.png')
     .addFields(
       { name: 'Member', value: `${member.user.tag} (${member.id})` },
       { name: 'TitanTreasure User ID', value: answers.titanUserId },
@@ -158,6 +160,7 @@ function buildDecisionEmbed(originalEmbed, decisionLabel, actorTag) {
     { name: 'Decision', value: `${decisionLabel} by ${actorTag}` },
   ]);
   embed.setColor(decisionLabel.startsWith('Rejected') ? '#E74C3C' : '#2ECC71');
+  embed.setThumbnail('attachment://tt-logo-square.png');
   embed.setTimestamp();
 
   return embed;
@@ -221,6 +224,7 @@ async function ensureVerificationPanel(guild, clientUserId) {
   const payload = {
     embeds: [buildVerificationPanelEmbed()],
     components: buildVerificationPanelComponents(),
+    files: buildAttachmentFiles(verificationTemplate.panel.assets),
   };
 
   if (existingMessage) {
@@ -259,6 +263,7 @@ async function ensureSupportPanel(guild, clientUserId) {
   const payload = {
     embeds: [buildSupportPanelEmbed()],
     components: buildSupportPanelComponents(),
+    files: buildAttachmentFiles(supportTemplate.panel.assets),
   };
 
   if (existingMessage) {
@@ -358,6 +363,7 @@ function buildSupportTicketEmbed(member, topic) {
     .setTitle(`Support Ticket • ${topic.label}`)
     .setDescription(`Private support thread for ${member}.`)
     .setColor('#052967')
+    .setThumbnail('attachment://tt-logo-square.png')
     .addFields(
       { name: 'Member', value: `${member.user.tag} (${member.id})` },
       { name: 'Topic', value: topic.label },
@@ -411,6 +417,7 @@ async function handleSupportTopicSelection(interaction) {
   await thread.send({
     content: `<@${responder.id}> ${interaction.user} opened a new ${topic.label.toLowerCase()} ticket.`,
     embeds: [buildSupportTicketEmbed(interaction.member, topic)],
+    files: buildAttachmentFiles(),
   });
 
   await interaction.update({
@@ -431,6 +438,7 @@ async function handleVerificationSubmission(interaction) {
   const reviewMessage = await reviewChannel.send({
     embeds: [buildSubmissionEmbed(interaction.member, answers)],
     components: buildReviewButtons(interaction.user.id),
+    files: buildAttachmentFiles(),
   });
 
   await ensureMemberRole(interaction.member, verificationTemplate.roleNames.unverified, true);
@@ -481,6 +489,7 @@ async function handleStaffDecision(interaction) {
   await interaction.update({
     embeds: [updatedEmbed],
     components: updatedComponents,
+    files: buildAttachmentFiles(),
   });
 
   await interaction.followUp({

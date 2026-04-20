@@ -32,12 +32,28 @@ const brandVoice = Object.freeze({
 const brandAssets = Object.freeze({
   logos: {
     square: {
+      name: 'tt-logo-square.png',
+      url: 'attachment://tt-logo-square.png',
       path: 'Logos-20260420T132237Z-3-001\\Logos\\mobile\\Square (1_1).png',
       recommendedUse: 'Discord server icon, square promotional tiles, and profile-style brand placements.',
     },
     horizontal: {
+      name: 'tt-logo-horizontal-mobile.png',
+      url: 'attachment://tt-logo-horizontal-mobile.png',
       path: 'Logos-20260420T132237Z-3-001\\Logos\\mobile\\Horizontal (1_3).png',
       recommendedUse: 'Announcement headers, partner collateral, and wide-format hero placements.',
+    },
+    horizontalDark: {
+      name: 'tt-logo-horizontal-dark.png',
+      url: 'attachment://tt-logo-horizontal-dark.png',
+      path: 'Logos-20260420T132237Z-3-001\\Logos\\14.png',
+      recommendedUse: 'Wide logo treatment for light-background collateral or general branded headers.',
+    },
+    horizontalLight: {
+      name: 'tt-logo-horizontal-light.png',
+      url: 'attachment://tt-logo-horizontal-light.png',
+      path: 'Logos-20260420T132237Z-3-001\\Logos\\3.png',
+      recommendedUse: 'Wide logo treatment for embeds or collateral where the full logo lockup reads better than the square mark.',
     },
   },
   banners: {
@@ -52,6 +68,18 @@ const brandAssets = Object.freeze({
     referralCampaign: {
       path: 'Banners-20260420T132232Z-3-001\\Banners\\refer-a-friend1.jpg',
       recommendedUse: 'Referral, invite, ambassador, and friend-to-friend acquisition campaigns.',
+    },
+    referralCampaignAlt: {
+      name: 'tt-referral-banner.jpg',
+      url: 'attachment://tt-referral-banner.jpg',
+      path: 'Banners-20260420T132232Z-3-001\\Banners\\refer-a-friend2.jpg',
+      recommendedUse: 'Referral, invite, ambassador, and friend-to-friend acquisition campaigns with stronger visual CTA.',
+    },
+    genericPromoMobile: {
+      name: 'tt-generic-promo-mobile.png',
+      url: 'attachment://tt-generic-promo-mobile.png',
+      path: 'Banners-20260420T132232Z-3-001\\Banners\\Mobile 344x208 -2.png',
+      recommendedUse: 'Generic promotional hero for onboarding, support, or broad campaign embeds.',
     },
     registrationBanner: {
       path: 'Banners-20260420T132232Z-3-001\\Banners\\Reg form banner.png',

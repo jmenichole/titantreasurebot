@@ -3,6 +3,8 @@ const {
   EmbedBuilder,
   PermissionFlagsBits,
 } = require('discord.js');
+const path = require('path');
+const { brandAssets } = require('./brand-kit');
 
 function pickRoleByName(guild, roleName) {
   return guild.roles.cache.find((role) => role.name === roleName);
@@ -67,8 +69,8 @@ function applyEmbedData(embedBuilder, embed) {
     embedBuilder.addFields(embed.fields);
   }
 
-  if (embed.thumbnail) {
-    embedBuilder.setThumbnail(embed.thumbnail);
+  if (embed.thumbnail ?? brandAssets.logos.square.url) {
+    embedBuilder.setThumbnail(embed.thumbnail ?? brandAssets.logos.square.url);
   }
 
   if (embed.image) {
@@ -76,6 +78,23 @@ function applyEmbedData(embedBuilder, embed) {
   }
 
   return embedBuilder;
+}
+
+function buildAttachmentFiles(assets = []) {
+  const resolvedAssets = [brandAssets.logos.square, ...assets];
+  const seenNames = new Set();
+
+  return resolvedAssets.flatMap((asset) => {
+    if (!asset?.name || seenNames.has(asset.name)) {
+      return [];
+    }
+
+    seenNames.add(asset.name);
+    return [{
+      attachment: path.join(__dirname, asset.path),
+      name: asset.name,
+    }];
+  });
 }
 
 function buildSeedEmbed(seed) {
@@ -182,7 +201,10 @@ async function ensureSeedMessage(channel, seed, clientUserId) {
   ));
 
   const embed = buildSeedEmbed(seed);
-  const payload = { embeds: [embed] };
+  const payload = {
+    embeds: [embed],
+    files: buildAttachmentFiles(seed.assets),
+  };
 
   if (existingMessage) {
     await existingMessage.edit(payload);
@@ -223,6 +245,7 @@ async function syncGuild(guild, template, clientUserId) {
 
 module.exports = {
   applyEmbedData,
+  buildAttachmentFiles,
   buildPermissionOverwrites,
   pickRoleByName,
   pickTextChannelByName,
