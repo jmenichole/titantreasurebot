@@ -93,7 +93,7 @@ const channelPurpose = Object.freeze({
   ANNOUNCEMENTS: 'Broadcast only high-signal launches, campaigns, and monetization pushes.',
   COMMUNITY: 'Turn verified members into active regulars through lightweight conversation and social momentum.',
   'VIP TRANSFER': 'Run a concierge migration lane for high-value players moving from other communities.',
-  'PROOF & WINS': 'Build trust and FOMO with curated proof, wins, and deposit momentum.',
+  WINS: 'Let verified members share standout wins and keep social momentum visible.',
   SUPPORT: 'Resolve blockers that prevent conversion, retention, or VIP trust.',
   STAFF: 'Coordinate internal execution, reviews, and launch operations.',
 });

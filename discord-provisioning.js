@@ -222,6 +222,43 @@ async function ensureSeedMessage(channel, seed, clientUserId) {
   console.log(`Posted seed embed in #${channel.name}: ${seed.key}`);
 }
 
+async function removeRetiredChannels(guild, retiredChannels = []) {
+  for (const channelName of retiredChannels) {
+    const channel = guild.channels.cache.find((entry) => (
+      entry.type === ChannelType.GuildText &&
+      entry.name === channelName
+    ));
+
+    if (!channel) {
+      continue;
+    }
+
+    await channel.delete('TitanTreasure bootstrap retired channel cleanup');
+    console.log(`Deleted retired channel: #${channelName}`);
+  }
+}
+
+async function removeRetiredCategories(guild, retiredCategories = []) {
+  for (const categoryName of retiredCategories) {
+    const category = guild.channels.cache.find((entry) => (
+      entry.type === ChannelType.GuildCategory &&
+      entry.name === categoryName
+    ));
+
+    if (!category) {
+      continue;
+    }
+
+    if (guild.channels.cache.some((entry) => entry.parentId === category.id)) {
+      console.log(`Skipped retired category cleanup for ${categoryName} because channels still exist inside it.`);
+      continue;
+    }
+
+    await category.delete('TitanTreasure bootstrap retired category cleanup');
+    console.log(`Deleted retired category: ${categoryName}`);
+  }
+}
+
 async function syncGuild(guild, template, clientUserId) {
   const roleIds = { everyone: guild.roles.everyone.id };
 
@@ -241,6 +278,9 @@ async function syncGuild(guild, template, clientUserId) {
       }
     }
   }
+
+  await removeRetiredChannels(guild, template.retiredChannels);
+  await removeRetiredCategories(guild, template.retiredCategories);
 }
 
 module.exports = {
