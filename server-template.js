@@ -722,6 +722,7 @@ const supportTemplate = {
       readyStatus: 'Ready for owner review',
       transcriptFallback: 'No member follow-up has been posted in the Discord thread yet.',
       commands: {
+        chatId: '/chatid',
         approve: '/approve <caseId>',
         deny: '/deny <caseId> <reason>',
         moreInfo: '/moreinfo <caseId> <details needed>',

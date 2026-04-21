@@ -701,6 +701,23 @@ function getTelegramReplyThreadId(message) {
   return message.message_thread_id ? Number(message.message_thread_id) : undefined;
 }
 
+function buildTelegramChatIdResponse(message) {
+  const lines = [
+    `Chat ID: ${message.chat.id}`,
+    `Chat type: ${message.chat.type}`,
+  ];
+
+  if (message.message_thread_id) {
+    lines.push(`Thread ID: ${message.message_thread_id}`);
+  }
+
+  if (message.from?.id) {
+    lines.push(`User ID: ${message.from.id}`);
+  }
+
+  return lines.join('\n');
+}
+
 async function findVipCaseMessage(guild, caseId) {
   const opsChannel = await getVipOpsChannel(guild);
   let before;
@@ -1021,6 +1038,10 @@ async function fetchTelegramUpdates(botToken, offset) {
 async function handleTelegramCommand(guild, message, command) {
   const { vipChatId, vipThreadId, announcementChatId, announcementThreadId } = getTelegramConfig();
 
+  if (command.name === 'chatid') {
+    return buildTelegramChatIdResponse(message);
+  }
+
   if (command.name === 'approve') {
     if (!isTelegramThreadMatch(message, vipThreadId) || `${message.chat.id}` !== `${vipChatId}`) {
       throw new Error('Use /approve inside the configured VIP review Telegram channel or topic.');
@@ -1087,13 +1108,13 @@ async function handleTelegramUpdate(guild, update) {
     return;
   }
 
-  if (!isAuthorizedTelegramSource(message)) {
-    return;
-  }
-
   const command = parseTelegramCommand(message.text);
 
   if (!command) {
+    return;
+  }
+
+  if (command.name !== 'chatid' && !isAuthorizedTelegramSource(message)) {
     return;
   }
 
