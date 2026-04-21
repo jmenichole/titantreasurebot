@@ -91,28 +91,6 @@ function makeOverwrites({
   return overwrites;
 }
 
-function ownerSeed({ key, title, color, value, liveNote }) {
-  return {
-    key: `${key}-owner`,
-    pin: false,
-    embed: {
-      title: `${title} • Owner View`,
-      description: 'Internal walkthrough note. This explains the business purpose and should be deleted before opening the server.',
-      color,
-      fields: [
-        {
-          name: 'Business purpose',
-          value,
-        },
-        {
-          name: 'Live copy goal',
-          value: liveNote,
-        },
-      ],
-    },
-  };
-}
-
 function playerSeed({
   key,
   title,
@@ -140,21 +118,12 @@ function seedPair({
   key,
   title,
   color,
-  value,
-  liveNote,
   playerDescription,
   playerFields,
   assets,
   image,
 }) {
   return [
-    ownerSeed({
-      key,
-      title,
-      color,
-      value,
-      liveNote,
-    }),
     playerSeed({
       key,
       title,
@@ -278,16 +247,24 @@ const serverTemplate = {
             title: 'Rules & FAQ',
             color: embedThemes.policy,
             value: 'This channel protects tone and trust. It should communicate that the server is clean, controlled, and easy to navigate without sounding heavy-handed.',
-            liveNote: 'Keep rules short, clear, and premium. Pair them with one simple explanation of where members should go next.',
-            playerDescription: 'Clean standards. Faster trust. Clear support path.',
+            liveNote: 'Keep rules short, clear, and premium. Pair them with a simple channel map so members know exactly where feedback, bugs, feature ideas, VIP help, and support requests belong.',
+            playerDescription: 'Clean standards.\nClear channel map.\nFaster routing.',
             playerFields: [
               {
                 name: 'Ground rules',
-                value: 'No spam. No abuse. Use the right lane for support, verification, or VIP help.',
+                value: '• No spam\n• No abuse\n• Use the right lane for support, verification, or VIP help',
               },
               {
-                name: 'Quick answer',
-                value: 'Verify first, then use the dedicated channels for deposits, VIP transfer, referrals, cashback, and support.',
+                name: 'Start here',
+                value: '• `get-verified` - unlock access\n• `deposit-guide` - payment and redemption info\n• `support-desk` - private help and VIP transfer tickets',
+              },
+              {
+                name: 'Community channels',
+                value: '• `vip-questions` - general VIP questions\n• `referral-hq` - referral talk\n• `giveaways-and-bonus-codes` - promo drops\n• `contests-and-challenges` - participation pushes\n• `big-wins` - standout win posts',
+              },
+              {
+                name: 'Feedback and fixes',
+                value: 'Use `support-desk` and choose the ticket topic for:\n• Feedback\n• Bug Report\n• Feature Request / Suggestion',
               },
             ],
           }),
@@ -331,46 +308,23 @@ const serverTemplate = {
           permissionOverwrites: makeOverwrites({ everyoneView: true, everyoneSend: false }),
           seedMessages: seedPair({
             key: 'announcements-intro',
-            title: 'Official Updates',
+            title: 'Hacksaw Games Are Now Live',
             color: embedThemes.announcement,
-            value: 'This is the high-signal broadcast lane. It should make launches, offers, and key updates easy to trust and easy to act on.',
-            liveNote: 'Keep every announcement short, valuable, and tied to one obvious next step.',
-            playerDescription: 'High-signal launches, promos, and important updates only.',
+            value: 'This channel should highlight real launches and meaningful updates in a way that feels immediate, premium, and worth checking right away.',
+            liveNote: 'Use the live embed to announce that Hacksaw provider games are now live on the site with one short excitement hook.',
+            playerDescription: 'Hacksaw provider games are now live on TitanTreasure.',
             playerFields: [
               {
-                name: 'What belongs here',
-                value: 'Launch drops, major promos, mission pushes, and important notices.',
+                name: 'Live now',
+                value: 'Hacksaw titles are now available on the site.',
               },
               {
-                name: 'What to expect',
-                value: 'Clean posts, no filler, and a clear action when something matters.',
+                name: 'Why check in',
+                value: 'Fresh provider drops give you more variety, quicker discovery, and more reasons to jump back in.',
               },
             ],
             assets: [brandAssets.logos.horizontalDark],
             image: brandAssets.logos.horizontalDark.url,
-          }),
-        },
-        {
-          name: 'titan-upgrade',
-          topic: 'VIP transfer campaign info for players migrating from other communities.',
-          permissionOverwrites: makeOverwrites({ everyoneView: true, everyoneSend: false }),
-          seedMessages: seedPair({
-            key: 'titan-upgrade',
-            title: 'Titan Upgrade',
-            color: embedThemes.vip,
-            value: 'This is the migration offer lane. It should communicate better treatment, smoother onboarding, and a cleaner path for higher-value players moving over.',
-            liveNote: 'Focus on upgrade value, clear expectations, and where to ask questions or start the process.',
-            playerDescription: 'Concierge-style VIP migration with clearer expectations and cleaner follow-through.',
-            playerFields: [
-              {
-                name: 'Best fit',
-                value: 'Players looking for better treatment, faster support, and a more organized onboarding path.',
-              },
-              {
-                name: 'How it works',
-                value: 'Use `vip-transfer` to start the process or `vip-questions` if you want clarity before opening a case.',
-              },
-            ],
           }),
         },
         {
@@ -381,40 +335,21 @@ const serverTemplate = {
             key: 'deposit-guide',
             title: 'Deposit Guide',
             color: embedThemes.deposit,
-            value: 'This channel reduces first-deposit confusion and support drag. It should answer the most important pre-deposit questions in one fast read.',
-            liveNote: 'Keep the copy practical: what to prepare, what to expect, and where to go if something stalls.',
-            playerDescription: 'Fast deposit clarity without the back-and-forth.',
+            value: 'This channel should reduce payment friction by showing what redemption options are live now and what additional methods are on the way.',
+            liveNote: 'Keep the live copy practical and current: bank account redemption is already live, debit card redemption was added, and Apple Pay plus Skrill are in progress.',
+            playerDescription: 'Current redemption options are live now, with more payment flexibility on the way.',
             playerFields: [
               {
-                name: 'What to check first',
-                value: 'Deposit method, bonus terms, and what to prepare before you start.',
+                name: 'Available now',
+                value: 'Bank account redemption is already available, and debit card redemption has now been added.',
               },
               {
-                name: 'If something is stuck',
-                value: 'Use `support-desk` for help fast, or `vip-transfer` if the issue is VIP or transfer-related.',
-              },
-            ],
-          }),
-        },
-        {
-          name: 'new-games-radar',
-          topic: 'Staff-curated feed for featured drops, new games, provider highlights, and discovery moments pulled from the site experience.',
-          permissionOverwrites: makeOverwrites({ everyoneView: true, everyoneSend: false }),
-          seedMessages: seedPair({
-            key: 'new-games-radar',
-            title: 'New Games Radar',
-            color: embedThemes.announcement,
-            value: 'This channel gives members fresh reasons to come back between promos. It supports retention through discovery, novelty, and quick curated picks.',
-            liveNote: 'Keep it focused on new drops, featured providers, and simple reasons to click through.',
-            playerDescription: 'Fresh drops, featured providers, and quick picks worth checking next.',
-            playerFields: [
-              {
-                name: 'Use this for',
-                value: 'New games, provider highlights, and staff picks worth trying.',
+                name: 'Coming next',
+                value: 'Apple Pay and Skrill are currently being integrated.',
               },
               {
-                name: 'Why it matters',
-                value: 'Fresh discovery keeps the server active between bigger announcements and promos.',
+                name: 'Need help?',
+                value: 'Use `support-desk` for fast help if anything with payment or redemption needs a staff check.',
               },
             ],
           }),
@@ -445,25 +380,6 @@ const serverTemplate = {
           }),
         },
         {
-          name: 'introductions',
-          topic: 'Lightweight introductions to get members talking quickly after verification.',
-          permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true }),
-          seedMessages: seedPair({
-            key: 'introductions-intro',
-            title: 'Introductions',
-            color: embedThemes.welcome,
-            value: 'This channel helps newly verified members post something fast, which increases the chance they become active instead of disappearing after onboarding.',
-            liveNote: 'Make the first post easy. One short intro prompt is enough.',
-            playerDescription: 'A fast intro helps you plug in quickly.',
-            playerFields: [
-              {
-                name: 'Starter prompt',
-                value: 'How did you find TitanTreasure, what do you play, and what brought you here?',
-              },
-            ],
-          }),
-        },
-        {
           name: 'referral-hq',
           topic: 'Referral strategy, leaderboard pushes, and discussion around TitanTreasure invite growth.',
           permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true }),
@@ -489,109 +405,51 @@ const serverTemplate = {
           }),
         },
         {
-          name: 'cashback-club',
-          topic: 'XP and cashback progression discussion for members tracking their next tier.',
+          name: 'giveaways-and-bonus-codes',
+          topic: 'Promo code drops, giveaway updates, and bonus-related community pushes.',
           permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true }),
           seedMessages: seedPair({
-            key: 'cashback-club',
-            title: 'Cashback Club',
+            key: 'giveaways-bonus-codes',
+            title: 'Giveaways & Bonus Codes',
             color: embedThemes.deposit,
-            value: 'This channel supports retention by keeping cashback progress visible and giving members a reason to care about the next tier.',
-            liveNote: 'Position it as progression value: track tiers, understand XP, and stay engaged.',
-            playerDescription: 'Track tier progress and stay on the ladder.',
+            value: 'This is the promotional reward lane. It should keep members checking back for giveaway drops, code updates, and bonus-driven momentum.',
+            liveNote: 'Keep the copy focused on giveaway activity, promo codes, and quick-hit reward energy.',
+            playerDescription: 'Giveaway drops and bonus code updates in one place.',
             playerFields: [
               {
-                name: 'What the site shows',
-                value: 'XP-based cashback tiers ranging from 2% up to 25% on casino net losses.',
+                name: 'Use this for',
+                value: 'Giveaway announcements, code drops, bonus reminders, and limited reward pushes.',
               },
               {
-                name: 'Use this channel for',
-                value: 'Progress checks, tier jumps, ladder questions, and milestone pushes.',
+                name: 'Why it matters',
+                value: 'Fast reward updates give members more reasons to stay active and check in often.',
               },
             ],
           }),
         },
         {
-          name: 'achievements-and-missions',
-          topic: 'Habit-building lane for streaks, milestones, and challenge-style member prompts.',
+          name: 'contests-and-challenges',
+          topic: 'Community contests, challenge prompts, and participation-driven events.',
           permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true }),
           seedMessages: seedPair({
-            key: 'achievements-missions',
-            title: 'Achievements & Missions',
+            key: 'contests-challenges',
+            title: 'Contests & Challenges',
             color: embedThemes.welcome,
-            value: 'This is a habit and retention lane. It keeps members returning by making progress, streaks, and milestones feel visible and rewarding.',
-            liveNote: 'Keep it focused on streaks, milestone energy, and simple reasons to come back.',
-            playerDescription: 'Streaks, milestones, and easy reasons to return.',
+            value: 'This is the participation lane. It should create recurring reasons to join events, compete lightly, and stay active in the community.',
+            liveNote: 'Frame it around contest energy, simple challenge hooks, and reasons to jump in without friction.',
+            playerDescription: 'Community contests and challenge drops that keep things active.',
             playerFields: [
               {
-                name: 'What the site shows',
-                value: 'Achievements for streaks, first-bet milestones, and wagering goals across multiple game types.',
+                name: 'What belongs here',
+                value: 'Trivia pushes, challenge posts, contest rules, participation prompts, and winner callouts.',
               },
               {
-                name: 'Use this channel for',
-                value: 'Weekly prompts, streak celebrations, and milestone pushes.',
+                name: 'Why it matters',
+                value: 'Ongoing challenges turn passive members into active regulars.',
               },
             ],
           }),
         },
-      ],
-    },
-    {
-      name: 'VIP TRANSFER',
-      permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true, vipSend: true }),
-      channels: [
-        {
-          name: 'vip-transfer',
-          topic: 'Guided VIP migration path and proof-based concierge flow.',
-          permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true, vipSend: true }),
-          seedMessages: seedPair({
-            key: 'vip-transfer',
-            title: 'VIP Transfer Concierge',
-            color: embedThemes.vip,
-            value: 'This is the structured concierge lane for higher-value migration. It should make the transfer path feel organized, trust-building, and worth completing.',
-            liveNote: 'Communicate upgrade value, proof expectations, and a clear next step without sounding complicated.',
-            playerDescription: 'High-touch VIP migration support with organized follow-through.',
-            playerFields: [
-              {
-                name: 'What to prepare',
-                value: 'Your TitanTreasure User ID, current site details, VIP proof, and any useful context.',
-              },
-              {
-                name: 'What happens next',
-                value: 'Staff review the case, collect anything missing, and keep the process organized from there.',
-              },
-            ],
-          }),
-        },
-        {
-          name: 'vip-questions',
-          topic: 'General questions about VIP treatment, offers, and transfer expectations.',
-          permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true, vipSend: true }),
-          seedMessages: seedPair({
-            key: 'vip-questions',
-            title: 'VIP Questions',
-            color: embedThemes.vip,
-            value: 'This is the lighter VIP education lane. It exists so people can ask general questions before opening a full transfer or support case.',
-            liveNote: 'Explain that this channel is for general VIP questions, while `vip-transfer` is the actual intake lane for action.',
-            playerDescription: 'General VIP questions before you open a full transfer case.',
-            playerFields: [
-              {
-                name: 'Best for',
-                value: 'Clarifying VIP treatment, transfer expectations, and whether this path fits your situation.',
-              },
-              {
-                name: 'Use `vip-transfer` when',
-                value: 'You are ready to submit proof, provide details, and start the actual transfer process.',
-              },
-            ],
-          }),
-        },
-      ],
-    },
-    {
-      name: 'WINS',
-      permissionOverwrites: makeOverwrites({ everyoneView: false, verifiedSend: true }),
-      channels: [
         {
           name: 'big-wins',
           topic: 'Reserved for real-time win proof and momentum-building social proof.',
@@ -623,27 +481,50 @@ const serverTemplate = {
       channels: [
         {
           name: 'support-desk',
-          topic: 'General help for onboarding, deposits, verification questions, and account issues.',
+          topic: 'General help for onboarding, deposits, verification questions, account issues, and private ticket routing.',
           permissionOverwrites: makeOverwrites({ everyoneView: true, everyoneSend: true }),
           seedMessages: seedPair({
             key: 'support',
             title: 'Support Desk',
             color: embedThemes.support,
             value: 'This is the blocker-removal lane. It exists to catch friction quickly so users do not stall out between verification, deposit, VIP, or account steps.',
-            liveNote: 'Keep the message short: fast help, clear use cases, and one obvious action through the ticket button.',
+            liveNote: 'Keep the message short: fast help, clear use cases, and one obvious action through the ticket button. Make it clear VIP transfers are completed through a support ticket now.',
             playerDescription: 'Fast private help when something is blocking progress.',
             playerFields: [
               {
                 name: 'Use it for',
-                value: 'Verification issues, deposit questions, VIP transfer help, or any blocker that needs staff support.',
+                value: 'Verification issues, deposit questions, VIP transfer help, feedback, bug reports, feature suggestions, or any blocker that needs staff support.',
               },
               {
                 name: 'Best way to get help',
-                value: 'Use the support ticket button below to open a private case thread with the right topic and staff routing.',
+                value: 'Use the support ticket button below to open a private case thread with the right topic and staff routing. VIP transfers are completed there as well.',
               },
             ],
             assets: [brandAssets.banners.genericPromoMobile],
             image: brandAssets.banners.genericPromoMobile.url,
+          }),
+        },
+        {
+          name: 'vip-questions',
+          topic: 'General questions about VIP treatment, transfer expectations, and support-ticket next steps.',
+          permissionOverwrites: makeOverwrites({ everyoneView: true, everyoneSend: false }),
+          seedMessages: seedPair({
+            key: 'vip-questions',
+            title: 'VIP Questions',
+            color: embedThemes.vip,
+            value: 'This is the lighter VIP education lane. It exists so people can understand the VIP path before opening a private support ticket.',
+            liveNote: 'Explain that this channel is for general VIP questions only, and that completed VIP transfers now happen through a support ticket.',
+            playerDescription: 'General VIP questions first. Open a support ticket when you are ready to complete a transfer.',
+            playerFields: [
+              {
+                name: 'Best for',
+                value: 'Clarifying VIP treatment, transfer expectations, and whether this path fits your situation.',
+              },
+              {
+                name: 'Ready to transfer?',
+                value: 'Go to `support-desk`, create a private ticket, and choose the VIP transfer help topic to complete the process.',
+              },
+            ],
           }),
         },
       ],
@@ -657,46 +538,44 @@ const serverTemplate = {
           topic: 'Internal operations, launch prep, and execution notes for staff.',
           permissionOverwrites: makeOverwrites({ everyoneView: false }),
           seedMessages: [
-            ownerSeed({
-              key: 'staff-ops',
-              title: 'Staff Ops',
-              color: embedThemes.announcement,
-              value: 'This is the private command lane for execution, decisions, and internal coordination once the server is live.',
-              liveNote: 'Use it for internal direction, real-time ops notes, and anything that should not be public.',
-            }),
-          ],
-        },
-        {
-          name: 'launch-checklist',
-          topic: 'Private staging area for launch tasks, campaign timing, and follow-up notes.',
-          permissionOverwrites: makeOverwrites({ everyoneView: false }),
-          seedMessages: [
-            ownerSeed({
-              key: 'launch-checklist',
-              title: 'Launch Checklist',
-              color: embedThemes.announcement,
-              value: 'This is the private readiness board for the walkthrough and launch. It makes sure the public-facing flow is clean before traffic gets pushed in.',
-              liveNote: 'Keep the checklist practical: bot, panels, copy, staffing, and launch-day follow-through.',
-            }),
             {
-              key: 'launch-checklist-live',
+              key: 'staff-ops-live',
               pin: true,
               embed: {
-                title: 'Launch Checklist',
-                description: 'Use this private checklist before promoting the server publicly.',
+                title: 'Staff Ops',
+                description: 'Private staff lane for live coordination, decisions, and internal follow-through.',
                 color: embedThemes.announcement,
                 fields: [
                   {
-                    name: 'Before opening traffic',
-                    value: '1. Bot online and synced\n2. Verification panel pinned and working\n3. Support ticket panel creating threads\n4. VIP lane copy current',
+                    name: 'Use this for',
+                    value: 'Internal direction, assignment handoff, launch notes, and real-time staff coordination.',
+                  },
+                ],
+              },
+            },
+            {
+              key: 'staff-trivia-ops-guide',
+              pin: true,
+              embed: {
+                title: 'Trivia Ops Guide',
+                description: 'Website-first trivia; Discord is the announcement and traffic layer.',
+                color: embedThemes.announcement,
+                fields: [
+                  {
+                    name: 'Before a round',
+                    value: 'Create and verify the round in the external trivia service. Confirm the Discord trivia lane is ready for traffic and that members will be sent to the website to play.',
                   },
                   {
-                    name: 'Campaign readiness',
-                    value: '1. Announcement copy finalized\n2. Deposit, VIP, and referral lanes updated\n3. Walkthrough path presentation-ready',
+                    name: 'When live',
+                    value: 'The trivia service should push the live announcement into Discord automatically. Staff monitor the channel, answer basic questions, and redirect blockers to `support-desk`.',
                   },
                   {
-                    name: 'Operational checks',
-                    value: '1. Staff roles clear\n2. Response owner confirmed\n3. Launch-day follow-up rhythm clear',
+                    name: 'After a round',
+                    value: 'Confirm the results or winners announcement posts correctly. Add a short follow-up message only if staff need to celebrate winners or point members to the next round.',
+                  },
+                  {
+                    name: 'If automation fails',
+                    value: 'Do not run the game in chat. Check the trivia service event first, then the bot or webhook status, and post a temporary manual link only if needed.',
                   },
                 ],
               },
@@ -708,13 +587,6 @@ const serverTemplate = {
           topic: 'Private queue for manual VIP transfer handling, owner-review prep, and follow-up tracking during the bonus test period.',
           permissionOverwrites: makeOverwrites({ everyoneView: false }),
           seedMessages: [
-            ownerSeed({
-              key: 'vip-transfer-ops',
-              title: 'VIP Transfer Ops',
-              color: embedThemes.vip,
-              value: 'This is the internal queue for higher-touch VIP transfer handling while the workflow and bonus logic are still being refined.',
-              liveNote: 'Use it to track proof, handoff status, owner review notes, and whether a case is active, paused, approved, or closed.',
-            }),
             {
               key: 'vip-transfer-ops-live',
               pin: true,
@@ -738,15 +610,25 @@ const serverTemplate = {
   retiredChannels: [
     'deposit-alerts',
     'live-wins-recap',
+    'titan-upgrade',
+    'new-games-radar',
+    'introductions',
+    'cashback-club',
+    'achievements-and-missions',
+    'vip-transfer',
+    'launch-checklist',
   ],
   retiredCategories: [
     'PROOF & WINS',
+    'VIP TRANSFER',
+    'WINS',
   ],
 };
 
 const verificationTemplate = {
   panelChannelName: 'get-verified',
   reviewChannelName: 'staff-ops',
+  onboardingChannelId: '1496022021253894196',
   staffRoleNames: ['Admin', 'Moderator', 'Support'],
   roleNames: {
     verified: 'Verified',
@@ -778,11 +660,75 @@ const verificationTemplate = {
       ],
     },
   },
+  joinExperience: {
+    landingMessage: 'Welcome to TitanTreasure, {member}. Start in <#{channelId}> and check your DMs for the fastest setup path.',
+    dm: {
+      assets: [brandAssets.logos.horizontal],
+      embed: {
+        title: 'Welcome to TitanTreasure',
+        description: 'Here is the fastest path to get fully set up without guesswork.',
+        color: embedThemes.welcome,
+        image: brandAssets.logos.horizontal.url,
+        fields: [
+          {
+            name: '1. Start here',
+            value: 'Go to <#{channelId}> first. That is the main bot and onboarding lane for new members.',
+          },
+          {
+            name: '2. Get verified',
+            value: 'Open `get-verified`, press **Start Verification**, and submit your TitanTreasure User ID from your site settings.',
+          },
+          {
+            name: '3. Need help?',
+            value: 'Use `support-desk` if anything is confusing, blocked, or needs a staff check.',
+          },
+          {
+            name: '4. What unlocks next',
+            value: 'After approval, the bot gives you access to the full community, support lanes, and VIP routing when needed.',
+          },
+        ],
+      },
+    },
+  },
 };
 
 const supportTemplate = {
   panelChannelName: 'support-desk',
   responderUserId: '1153034319271559328',
+  responderRoleName: 'Support',
+  vipTransfer: {
+    opsChannelName: 'vip-transfer-ops',
+    announceChannelName: 'announcements',
+    defaultStatus: 'Awaiting player proof',
+    proofReceivedStatus: 'Proof received in Discord',
+    moreInfoStatus: 'Waiting for more info from player',
+    deniedStatus: 'Denied',
+    approvedStatus: 'Approved',
+    completedStatus: 'Completed',
+    telegramPendingLabel: 'Not sent yet',
+    telegramSentLabel: 'Sent to Telegram',
+    opsMessage: {
+      title: 'VIP Transfer Case',
+      description: 'Internal staff tracker for a VIP transfer request opened from Discord support.',
+    },
+    controls: {
+      markProofReceivedLabel: 'Mark Proof Received',
+      relayToTelegramLabel: 'Send to Telegram',
+      markCompleteLabel: 'Mark Complete',
+    },
+    threadNotice: 'Staff tracking has started for this VIP transfer. Send your current site, VIP tier, screenshots, and any transfer proof here so the handoff can be completed cleanly.',
+    telegram: {
+      handoffTitle: 'TitanTreasure VIP Transfer Handoff',
+      readyStatus: 'Ready for owner review',
+      transcriptFallback: 'No member follow-up has been posted in the Discord thread yet.',
+      commands: {
+        approve: '/approve <caseId>',
+        deny: '/deny <caseId> <reason>',
+        moreInfo: '/moreinfo <caseId> <details needed>',
+        announce: '/announce <message>',
+      },
+    },
+  },
   panel: {
     key: 'support-panel',
     buttonLabel: 'Create Support Ticket',
@@ -800,7 +746,7 @@ const supportTemplate = {
         },
         {
           name: 'Good fit',
-          value: 'Verification issues, deposit questions, VIP transfer help, account blockers, or anything stopping the next step.',
+          value: 'Verification issues, deposit questions, VIP transfer completion, feedback, bug reports, feature suggestions, account blockers, or anything stopping the next step.',
         },
       ],
     },
@@ -821,14 +767,32 @@ const supportTemplate = {
     {
       key: 'vip',
       label: 'VIP Transfer Help',
-      description: 'VIP migration questions, proof, or transfer follow-up.',
-      intakePrompt: 'Share your TitanTreasure User ID, current site, VIP status, and what kind of transfer help or follow-up you need.',
+      description: 'Complete a VIP transfer, submit proof, or request follow-up.',
+      intakePrompt: 'Share your TitanTreasure User ID, current site, VIP status, transfer proof, and anything staff need to complete the VIP transfer cleanly.',
     },
     {
       key: 'account',
       label: 'Account / General Support',
       description: 'Login blockers, onboarding issues, or anything else.',
       intakePrompt: 'Describe the blocker clearly, include your TitanTreasure User ID if relevant, and add screenshots if they will speed up support.',
+    },
+    {
+      key: 'feedback',
+      label: 'Feedback',
+      description: 'Player feedback on flows, features, or overall experience.',
+      intakePrompt: 'Share what you liked or disliked, what happened, and what would make the experience smoother for you.',
+    },
+    {
+      key: 'bug-report',
+      label: 'Bug Report',
+      description: 'Something is broken, glitched, or not working as expected.',
+      intakePrompt: 'Describe the bug clearly, include what you were trying to do, what happened instead, and add screenshots or steps to reproduce if possible.',
+    },
+    {
+      key: 'feature-request',
+      label: 'Feature Request / Suggestion',
+      description: 'Ideas for new features, improvements, or quality-of-life changes.',
+      intakePrompt: 'Describe the idea, why it would help, and what problem or friction it would solve for you.',
     },
   ],
 };

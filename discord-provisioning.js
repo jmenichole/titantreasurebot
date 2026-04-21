@@ -90,8 +90,9 @@ function buildAttachmentFiles(assets = []) {
     }
 
     seenNames.add(asset.name);
+    const relativePathSegments = asset.path.split(/[\\/]+/);
     return [{
-      attachment: path.join(__dirname, asset.path),
+      attachment: path.join(__dirname, ...relativePathSegments),
       name: asset.name,
     }];
   });
